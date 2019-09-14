@@ -14,6 +14,12 @@ class UserAr extends Component {
     )
   }
 
+  render() {
+    return (
+      <p>test</p>
+    )
+  }
+
   componentDidMount() {
     document.body.innerHTML = '' + this.getArRendering();
   }
