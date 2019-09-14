@@ -2,7 +2,6 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import React, { Component } from 'react';
-import admin from 'firebase-admin';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCZyDY8jUIq0O6TwEllM5Ee03ZJz9-Oihg",
