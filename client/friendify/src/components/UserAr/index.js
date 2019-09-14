@@ -25,7 +25,7 @@ class UserAr extends Component {
     document.body.innerHTML = reactElementToJSXString(
       <a-scene embedded arjs>
         <a-marker preset="hiro">
-          <a-box position="0 1 0" material="color: white;" depth="7" height="0.2" width="5">
+          <a-box position="0 0.1 0" material="color: white;" depth="7" height="0.2" width="5">
           </a-box>
         </a-marker>
         <a-entity camera></a-entity>
