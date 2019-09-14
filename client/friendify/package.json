@@ -16,7 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "serve": "http-server -S -C conf/cert.pem -K conf/key.pem"
   },
   "eslintConfig": {
     "extends": "react-app"
