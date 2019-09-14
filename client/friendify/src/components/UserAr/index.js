@@ -21,7 +21,7 @@ class UserAr extends Component {
   }
 
   componentDidMount() {
-    document.body.innerHTML = this.getArRendering().outerHTML;
+    document.body.innerHTML = React.renderToStaticMarkup(this.getArRendering());
   }
 }
 
