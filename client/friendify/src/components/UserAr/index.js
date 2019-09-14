@@ -21,7 +21,7 @@ class UserAr extends Component {
   }
 
   componentDidMount() {
-    document.body.innerHTML = '' + this.getArRendering();
+    document.body.innerHTML = this.getArRendering().outerHTML;
   }
 }
 
