@@ -1,6 +1,6 @@
 .qrcode {
   height: 100vh;
-  display: flex;
+  display: grid;
   align-content: center;
   justify-content: center;
 }
