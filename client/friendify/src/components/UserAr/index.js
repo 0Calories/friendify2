@@ -88,10 +88,11 @@ class UserAr extends Component {
             <a-entity layout="type: line" position="0 0.15 0.1">
               <a-entity position="0 0 0" text="align: center; width: 2.5; color: black; value: Barack Obama"></a-entity>
             </a-entity>
-            <a-entity layout="type: line" position="0 -0.5 0">
+            <a-entity position="0 -0.5 0">
               <a-entity position="0 0.1 0" geometry="primitive: plane; height: 0.2; width: 0.6" material="shader: flat; color: #4167B2;" button>
                 <a-entity position="0 0 0.05" text="align: center; width: 2; color: black; value: Add Friend"></a-entity>
               </a-entity>
+              <a-entity position="0 -0.5 0" geometry="primitive: plane; height: 0.15; width: 1.5" material="shader: flat; color: #4167B2;"></a-entity>
             </a-entity>
           </a-plane>
 
