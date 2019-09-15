@@ -4,6 +4,7 @@ import 'firebase/firestore';
 
 import React, { Component } from 'react';
 import reactElementToJSXString from 'react-element-to-jsx-string';
+import  FB from 'fb';
 
 // TODO: This is DISGUSTINGLY bad practice, but this is a hackathon so ya yeet
 const firebaseConfig = {
@@ -50,10 +51,28 @@ class UserAr extends Component {
         const token = doc.data().token;
         const user = doc.data().user;
 
-        this.setState({ token, user }, () => {
-          console.log(this.state);
-          this.embedAR();
-        });
+        FB.options({
+          accessToken: token,
+          appId: 494153637810356
+        })
+
+        FB.api(
+          '/me',
+          'GET',
+          {"fields":"id,picture,name"},
+          (response) => {
+            console.log(response);
+            this.setState({
+              profilePic: response["picture"]["data"]["url"],
+              token,
+              user,
+              name: response["name"]
+            }, () => {
+              console.log(this.state);
+              this.embedAR();
+            })
+          }
+        );
       }
     });
   }
@@ -61,22 +80,43 @@ class UserAr extends Component {
   embedAR = () => {
     const script = document.createElement("script");
 
-    script.src = `
+    script.innerHTML = 
+    `
+    var url = window.location.href;
+    url = url.split('/');
+    var id = url[url.length - 1];
     AFRAME.registerComponent("button", {
       init: function() {
-        this.el.addEventListener("click", (e)=>{alert('hello')})
+        this.el.addEventListener("click", (e)=>{
+          FB.ui(
+            { 
+             method: 'friends.add', 
+             id: id // assuming you set this variable previously...
+            }, 
+            function(param){
+       
+             console.log(param);
+       
+                   // If they cancel params will show: 
+                   //    {action:false, ...}
+                   // and if they send the friend request it'll have:
+                   //    {action:true, ...}
+                   // and if they closed the pop-up window then:
+                   //    param is undefined
+            }
+           );
+        })
       }
-    })`;
+    });`
 
-    document.body.appendChild(script);
+    document.head.appendChild(script);
     
     document.body.innerHTML = reactElementToJSXString(
 
       <a-scene embedded arjs="trackingMethod: best;" cursor="rayOrigin: mouse; fuse: false">
         
         <a-assets>
-          {/* <img id="chung" src="https://m.media-amazon.com/images/I/71uIImpdmBL._SS500_.jpg" /> */}
-          <img id="chung" src="https://pbs.twimg.com/media/CvS_r8KWEAEYSzo.jpg"/>
+          <img id="chung" src={this.state.profilePic}/>
         </a-assets>
 
         <a-marker preset="hiro">
@@ -86,7 +126,7 @@ class UserAr extends Component {
               <a-entity position="0 0 0.5" geometry="primitive: circle; radius: 0.2" material="shader: flat; src: #chung" ></a-entity>
             </a-entity>
             <a-entity layout="type: line" position="0 -0.3 0">
-              <a-entity position="0 0 0.5" text="align: center; width: 2; color: black; value: Barack Obama"></a-entity>
+              <a-entity position="0 0 0.5" text={`align: center; width: 2; color: black; value: ${this.state.name}`}></a-entity>
             </a-entity>
             <a-entity layout="type: line" position="0 -0.5 0">
               <a-entity position="0 0 0.2" geometry="primitive: plane; height: 0.2; width: 0.6" material="shader: flat; color: #4167B2;" button>

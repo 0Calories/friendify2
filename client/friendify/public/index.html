@@ -31,17 +31,21 @@
     <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.8/aframe/build/aframe-ar.js"></script>
     <!-- <script src="https://unpkg.com/aframe-layout-component@4.3.1/dist/aframe-layout-component.min.js"></script> -->
     <!-- <script src="https://rawgit.com/nicolocarpignoli/nicolocarpignoli.github.io/master/ar-click-events/events.js"></script> -->
-    <script>
-      AFRAME.registerComponent("button", {
-        init: function() {
-          this.el.addEventListener("click", (e)=>{alert('hello')})
-        }
-      })
-    </script>
 
   </head>
   <body id=body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
   </body>
+  <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId            : 494153637810356,
+          autoLogAppEvents : true,
+          xfbml            : true,
+          version          : 'v4.0'
+        });
+      };
+    </script>
+  <script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
 </html>
