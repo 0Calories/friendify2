@@ -3,18 +3,6 @@ import reactElementToJSXString from 'react-element-to-jsx-string';
 
 class UserAr extends Component {
 
-  getArRendering = () => {
-    return (
-      <a-scene embedded arjs>
-        <a-marker preset="hiro">
-          <a-box position="0 0.5 0" material="color: blue;" depth="0.2" height="10" width="5">
-          </a-box>
-        </a-marker>
-        <a-entity camera></a-entity>
-      </a-scene>
-    )
-  }
-
   render() {
     return (
       <p>test</p>
@@ -23,14 +11,24 @@ class UserAr extends Component {
 
   componentDidMount() {
     document.body.innerHTML = reactElementToJSXString(
-      <a-scene embedded arjs>
+      <a-scene embedded arjs="trackingMethod: best;">
+        
+        <a-assets>
+          <img id="chung" src="https://m.media-amazon.com/images/I/71uIImpdmBL._SS500_.jpg" />
+        </a-assets>
+
         <a-marker preset="hiro">
-          <a-box position="0 -1 0" material="color: white;" depth="5" height="0.2" width="3">
-          </a-box>
+
+          <a-plane position="0 0 0" rotation="-90 0 0" width="3" height="5" color="white" shadow material="shader: flat;">
+            <a-entity position="1.5 1.5 0.1" text="width: 5; color: black; value: Hello world!"></a-entity>
+            <a-entity position="-1 0 0" geometry="primitive: plane; height: 1; width: 1" material="shader: flat; src: #chung"></a-entity>
+          </a-plane>
+
         </a-marker>
+
         <a-entity camera></a-entity>
       </a-scene>
-    );//React.renderToStaticMarkup(this.getArRendering());
+    );
   }
 }
 
