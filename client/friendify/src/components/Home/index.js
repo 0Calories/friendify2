@@ -41,7 +41,7 @@ class Home extends Component {
     e.preventDefault();
 
     var id = uuidv1();
-    QRCode.toDataURL(`https://1ba803be.ngrok.io/ar/$(id)`).then(url => {
+    QRCode.toDataURL(`https://1ba803be.ngrok.io/ar/${id}`).then(url => {
       this.setState({
         qrcode: url
       });
