@@ -1,0 +1,25 @@
+.register {
+  position: relative;
+}
+
+.register-card {
+  text-align: center;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  left: 50%;
+  width: 50%;
+  padding-bottom: 10%;
+  margin: auto;
+}
+
+.register-input, .register-label {
+  padding-top: 2%;
+}
+
+button {
+  margin-top: 5%;
+  padding: 2% 4% 2% 4%;
+}
+
+h1 {
+  padding-top: 25%;
+}
