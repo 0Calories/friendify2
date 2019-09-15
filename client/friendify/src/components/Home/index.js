@@ -1,8 +1,8 @@
 import * as firebase from 'firebase/app';
+import * as firebaseui from 'firebaseui'
 import 'firebase/auth';
 import 'firebase/firestore';
 import React, { Component } from 'react';
-
 import QRCode from 'qrcode';
 import uuidv1 from 'uuid/v1'
 
@@ -27,14 +27,42 @@ class Home extends Component {
       name: "",
       facebook: "",
       db: undefined,
-      qrcode: ""
+      qrcode: "",
+      userId: ''
     };
+  }
+
+  responseFacebook = (response) => {
+    console.log(response);
   }
 
   handleChange = e => {
     this.setState({
       [e.target.id]: e.target.value
     })
+  }
+
+  handleFacebookLogin = e => {
+    e.preventDefault();
+    const provider = new firebase.auth.FacebookAuthProvider();
+
+    firebase.auth().signInWithPopup(provider).then(function(result) {
+      // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+      const token = result.credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      this.addUserToDb(user);
+      // ...
+    }).catch(function(error) {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      const credential = error.credential;
+      // ...
+    });
   }
 
   handleSubmit = e => {
@@ -60,9 +88,62 @@ class Home extends Component {
 
   }
 
+  addUserToDb = authResult => {
+    return new Promise(resolve => {
+      const user = authResult.user.uid;
+
+      QRCode.toDataURL(`${window.location.href}ar/${user}`).then(url => {
+        this.setState({
+          qrcode: url
+        });
+      }).then(() => {
+        this.state.db.collection('users').doc(user).set({
+          user,
+          token: authResult.credential.accessToken,
+          qrcode: this.state.qrcode
+        }).catch(function(error) {
+          console.error("Error adding document: ", error);
+        });
+
+        resolve();
+      })
+    });
+  }
+
   componentDidMount() {
     firebase.initializeApp(firebaseConfig)
     this.setState({ db: firebase.firestore() });
+
+    const uiConfig = {
+      //signInSuccessUrl: `qrcode/${this.state.userId}`,
+      signInOptions: [
+        // Leave the lines as is for the providers you want to offer your users.
+        firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      ],
+      // tosUrl and privacyPolicyUrl accept either url string or a callback
+      // function.
+      // Terms of service url/callback.
+      tosUrl: '<your-tos-url>',
+      // Privacy policy url/callback.
+      privacyPolicyUrl: function() {
+        window.location.assign('<your-privacy-policy-url>');
+      },
+      callbacks: {
+        signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+          console.log(authResult);
+          this.addUserToDb(authResult).then(() => {
+            this.props.history.push('/qrcode/' + authResult.user.uid);
+            return false;
+          });
+        }
+      }
+    };
+
+    // Initialize the FirebaseUI Widget using Firebase.
+    const ui = new firebaseui.auth.AuthUI(firebase.auth());
+    // The start method will wait until the DOM is loaded.
+    ui.start('#firebaseui-auth-container', uiConfig);
   }
 
   render() {
@@ -101,6 +182,8 @@ class Home extends Component {
                 Register
               </button>
             </div>
+
+            <div id="firebaseui-auth-container"></div>
 
           </div>
         </form>

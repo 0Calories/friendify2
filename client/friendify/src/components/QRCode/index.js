@@ -6,6 +6,7 @@ import React, { Component } from 'react'
 
 import './qrcode.css'
 
+// TODO: This is DISGUSTINGLY bad practice, but this is a hackathon so ya yeet
 const firebaseConfig = {
   apiKey: "AIzaSyCZyDY8jUIq0O6TwEllM5Ee03ZJz9-Oihg",
   authDomain: "hack-the-north-2019-97ff8.firebaseapp.com",
@@ -18,23 +19,20 @@ const firebaseConfig = {
 
 class QRCode extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      qrcode: ""
-    };
-  }
+  state = {
+    qrcode: '',
+  };
 
   componentDidMount() {
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
-    var db = firebase.firestore();
+    const db = firebase.firestore();
 
-    var location = this.props.location['pathname'].split('/');
-    var userID = location[location.length - 1];
+    const location = this.props.location['pathname'].split('/');
+    const userID = location[location.length - 1];
     
-    var docRef = db.collection("users").doc(userID);
+    const docRef = db.collection('users').doc(userID);
     docRef.get().then(doc => {
       if (doc.exists) {
         console.log(doc.data());
@@ -42,13 +40,13 @@ class QRCode extends Component {
           qrcode: doc.data()['qrcode']
         });
       }
-    })
+    });
   }
 
   getQRCode = () => {
     if (this.state.qrcode) {
       return (
-        <img src={this.state.qrcode} alt="qrcode"></img>
+        <img src={this.state.qrcode} alt='qrcode'></img>
       )
     }
     return null;
