@@ -57,7 +57,7 @@ class QRCode extends Component {
   render() {
     return(
       <div className="qrcode">
-        <this.getQRCode></this.getQRCode>
+        <this.getQRCode className="qrcodeImage"></this.getQRCode>
       </div>
     )
   }

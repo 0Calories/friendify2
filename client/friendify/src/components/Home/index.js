@@ -57,7 +57,6 @@ class Home extends Component {
         console.error("Error adding document: ", error);
       });
     })
-
   }
 
   componentDidMount() {
