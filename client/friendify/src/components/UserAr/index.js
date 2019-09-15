@@ -121,16 +121,16 @@ class UserAr extends Component {
 
         <a-marker preset="hiro">
 
-          <a-plane position="0 0 0" rotation="-90 0 0" width="1" height="1.5" color="white" shadow material="shader: flat;">
-            <a-entity layout="type: line" position="0 0.4 0">
-              <a-entity position="0 0 0.5" geometry="primitive: circle; radius: 0.2" material="shader: flat; src: #chung" ></a-entity>
+          <a-plane position="0 0 0" rotation="-90 0 0" width="1.5" height="1.5" color="white" shadow material="shader: flat;">
+            <a-entity layout="type: line" position="0 0.25 0">
+              <a-entity position="0 0.5 0.1" geometry="primitive: circle; radius: 0.25" material="shader: flat; src: #chung" ></a-entity>
             </a-entity>
             <a-entity layout="type: line" position="0 -0.3 0">
               <a-entity position="0 0 0.5" text={`align: center; width: 2; color: black; value: ${this.state.name}`}></a-entity>
             </a-entity>
             <a-entity layout="type: line" position="0 -0.5 0">
-              <a-entity position="0 0 0.2" geometry="primitive: plane; height: 0.2; width: 0.6" material="shader: flat; color: #4167B2;" button>
-                <a-entity position="0 0.1 0.2" text="align: center; width: 2; color: black; value: Add Friend"></a-entity>
+              <a-entity position="0 0.1 0" geometry="primitive: plane; height: 0.2; width: 0.6" material="shader: flat; color: #4167B2;" button>
+                <a-entity position="0 0 0.05" text="align: center; width: 2; color: black; value: Add Friend"></a-entity>
               </a-entity>
             </a-entity>
           </a-plane>
