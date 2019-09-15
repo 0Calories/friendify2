@@ -46,17 +46,18 @@ class QRCode extends Component {
   getQRCode = () => {
     if (this.state.qrcode) {
       return (
-        <img src={this.state.qrcode} alt='qrcode'></img>
+        <div className="qrcode">
+          <img className="qrcodeImage" src="https://stemkoski.github.io/AR-Examples/markers/hiro.png" alt='qrcode'></img>
+          <img className="marker" src={this.state.qrcode}></img>
+        </div>
       )
     }
-    return null;
+    return <div></div>;
   }
   
   render() {
     return(
-      <div className="qrcode">
-        <this.getQRCode className="qrcodeImage"></this.getQRCode>
-      </div>
+      <this.getQRCode></this.getQRCode>
     )
   }
 }
